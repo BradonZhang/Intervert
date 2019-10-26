@@ -55,7 +55,7 @@ class App extends Component {
       roomName,
     } = this.state;
 
-    function removeUser(){
+    const removeUser = () => {
       var text=prompt('Enter user to kick');
       currentUser.removeUserFromRoom({
         userId: text,
@@ -67,9 +67,12 @@ class App extends Component {
         .catch(err => {
           console.log(`Error removing leah from room 123: ${err}`)
         })
-      }
+      
+      const updated = roomUsers.filter(c => c.id !== text);
+      this.setState({ roomUsers: updated });
+    }
 
-    function addUser(){
+    const addUser = () => {
       var text=prompt('Enter user to add');
       currentUser.addUserToRoom({
         userId: text,
@@ -81,6 +84,14 @@ class App extends Component {
         .catch(err => {
           console.log(`Error adding keith to room 123: ${err}`)
         })
+      
+      //  const updated = roomUsers.push(text);
+      //  console.log(updated);
+      //  this.setState({ roomUsers: updated });
+
+      const updated=[...this.state.roomUsers];
+      updated.push(text);
+      this.setState({ roomUsers: updated });
     }
 
   //   function delRoom(){
@@ -143,11 +154,11 @@ class App extends Component {
           ) : null}
 
           <li className="room-member">Kick user
-              <button 
+            <button
               onClick={removeUser}
               title={'Kick '+userId+' from '+roomName}
               className="send-dm"
-                >+
+            >+
                 </button>
           </li>
 
@@ -166,8 +177,7 @@ class App extends Component {
             const rooms = this.state.rooms.filter(c => c.id !== currentRoom.id);
             this.setState({ rooms });
           }}
-          // onClick={delRoom()}
-          // onClick={addUser}
+          //  onClick={delRoom()}
           title={'Remove a direct message'}
           className="send-dm"
         >

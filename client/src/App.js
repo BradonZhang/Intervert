@@ -91,16 +91,19 @@ class App extends Component {
         })
     }
 
-  //   function delRoom(){
-  //     var someRoomID='f08a1545-13e7-4f37-95b4-458afdb34aab';
-  //      currentUser.deleteRoom({ roomId: 'f08a1545-13e7-4f37-95b4-458afdb34aab' })
-  //   .then(() => {
-  //     console.log(`Deleted room with ID: ${someRoomID}`)
-  //   })
-  //   .catch(err => {
-  //     console.log(`Error deleted room ${someRoomID}: ${err}`)
-  //   })
-  // }
+    const delRoom = () => {
+      var someRoomID=currentRoom.id;
+       currentUser.deleteRoom({ roomId: someRoomID })
+    .then(() => {
+      console.log(`Deleted room with ID: ${someRoomID}`)
+    })
+    .catch(err => {
+      console.log(`Error deleted room ${someRoomID}: ${err}`)
+    })
+
+    const updated = rooms.filter(c => c.id !== someRoomID);
+    this.setState({ rooms: updated });
+  }
 
     return (
       <div className="App">
@@ -170,12 +173,7 @@ class App extends Component {
 
           <li className="room-member">Delete room
           <button
-          onClick={() => {
-            const rooms = this.state.rooms.filter(c => c.id !== currentRoom.id);
-            this.setState({ rooms });
-          }}
-          // onClick={delRoom()}
-          // onClick={addUser}
+          onClick={delRoom}
           title={'Remove a direct message'}
           className="send-dm"
         >

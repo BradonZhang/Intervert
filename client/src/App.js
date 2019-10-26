@@ -57,6 +57,10 @@ class App extends Component {
 
     function removeUser(){
       var text=prompt('Enter user to kick');
+      if (text == null || text == '')
+      {
+        return;
+      }
       currentUser.removeUserFromRoom({
         userId: text,
         roomId: currentRoom.id
@@ -71,6 +75,10 @@ class App extends Component {
 
     function addUser(){
       var text=prompt('Enter user to add');
+      if (text == null || text == '')
+      {
+        return;
+      }
       currentUser.addUserToRoom({
         userId: text,
         roomId: currentRoom.id

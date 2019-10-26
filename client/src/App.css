@@ -1,8 +1,5 @@
-@media (prefers-color-scheme: dark) 
-{
-	body {
-		background-color: #303136;
-	}
+body {
+  background-color: #303136;
 }
 html {
   box-sizing: border-box;

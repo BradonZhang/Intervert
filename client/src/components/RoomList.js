@@ -7,6 +7,7 @@ const RoomList = props => {
     const roomIcon = !room.isPrivate ? '🌐' : '🔒';
     const isRoomActive = room.id === currentRoom.id ? 'active' : '';
 
+
     return (
       <li
         className={isRoomActive}
@@ -24,6 +25,7 @@ const RoomList = props => {
       </li>
     );
   });
+
   return (
     <div className="rooms">
       <ul className="chat-rooms">{roomList}</ul>

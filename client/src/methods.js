@@ -155,6 +155,7 @@ function createPrivateRoom(id) {
       userIds: [currentUser.id, id],
     },
   });
+  
 }
 
 function sendDM(id) {

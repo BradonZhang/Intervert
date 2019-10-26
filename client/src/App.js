@@ -14,6 +14,7 @@ import RoomUsers from './components/RoomUsers';
 import 'skeleton-css/css/normalize.css';
 import 'skeleton-css/css/skeleton.css';
 import './App.css';
+import { link } from 'fs';
 
 class App extends Component {
   constructor() {
@@ -31,12 +32,15 @@ class App extends Component {
       newMessage: '',
     };
 
+    
+
     this.handleInput = handleInput.bind(this);
     this.connectToChatkit = connectToChatkit.bind(this);
     this.connectToRoom = connectToRoom.bind(this);
     this.sendMessage = sendMessage.bind(this);
     this.sendDM = sendDM.bind(this);
   }
+
 
   render() {
     const {
@@ -50,6 +54,45 @@ class App extends Component {
       roomUsers,
       roomName,
     } = this.state;
+
+    function removeUser(){
+      var text=prompt('Enter user to kick');
+      currentUser.removeUserFromRoom({
+        userId: text,
+        roomId: currentRoom.id
+      })
+        .then(() => {
+          console.log('Removed ' + text+' from room '+roomName)
+        })
+        .catch(err => {
+          console.log(`Error removing leah from room 123: ${err}`)
+        })
+      }
+
+    function addUser(){
+      var text=prompt('Enter user to add');
+      currentUser.addUserToRoom({
+        userId: text,
+        roomId: currentRoom.id
+      })
+        .then(() => {
+          console.log('Added ' + text+' to room '+roomName)
+        })
+        .catch(err => {
+          console.log(`Error adding keith to room 123: ${err}`)
+        })
+    }
+
+  //   function delRoom(){
+  //     var someRoomID='f08a1545-13e7-4f37-95b4-458afdb34aab';
+  //      currentUser.deleteRoom({ roomId: 'f08a1545-13e7-4f37-95b4-458afdb34aab' })
+  //   .then(() => {
+  //     console.log(`Deleted room with ID: ${someRoomID}`)
+  //   })
+  //   .catch(err => {
+  //     console.log(`Error deleted room ${someRoomID}: ${err}`)
+  //   })
+  // }
 
     return (
       <div className="App">
@@ -90,6 +133,7 @@ class App extends Component {
           </footer>
         </section>
         <aside className="sidebar right-sidebar">
+  
           {currentRoom ? (
             <RoomUsers
               currentUser={currentUser}
@@ -97,6 +141,40 @@ class App extends Component {
               roomUsers={roomUsers}
             />
           ) : null}
+
+          <li className="room-member">Kick user
+              <button 
+              onClick={removeUser}
+              title={'Kick '+userId+' from '+roomName}
+              className="send-dm"
+                >+
+                </button>
+          </li>
+
+          <li className="room-member">Add user
+              <button 
+              onClick={addUser}
+              title={'Add '+userId+' to '+roomName}
+              className="send-dm"
+                >+
+                </button>
+          </li>
+
+          <li className="room-member">Delete room
+          <button
+          onClick={() => {
+            const rooms = this.state.rooms.filter(c => c.id !== currentRoom.id);
+            this.setState({ rooms });
+          }}
+          // onClick={delRoom()}
+          // onClick={addUser}
+          title={'Remove a direct message'}
+          className="send-dm"
+        >
+          ×
+        </button>
+        </li>
+
         </aside>
         {showLogin ? (
           <Dialog

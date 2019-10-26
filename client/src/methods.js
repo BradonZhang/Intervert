@@ -25,7 +25,7 @@ function handleInput(event) {
   });
 }
 
-function connectToRoom(id = <your room id>) {
+function connectToRoom(id = 'fc9f9056-e197-4c5c-bb90-e74671ecd84a') {
   const { currentUser } = this.state;
 
   this.setState({
@@ -94,7 +94,7 @@ function connectToChatkit(event) {
       });
 
       const chatManager = new Chatkit.ChatManager({
-        instanceLocator: '<your chatkit instance locator>',
+        instanceLocator: 'v1:us1:12175b69-a5c0-4104-be3b-62225da5450f',
         userId,
         tokenProvider,
       });

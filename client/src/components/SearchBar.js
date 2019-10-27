@@ -19,7 +19,7 @@ class SearchBar extends Component
           <input
             type="text"
             ref="clubSearchText"
-            placeholder="Search for clubs..."
+            placeholder="Search for groups..."
             onChange={this.filterUpdate.bind(this)}
             className='club-search'
           />

@@ -24,7 +24,7 @@ Project management was new for a lot of us too. While we were all fine with crea
 
 Among our team's toughest challenges* were the many disputes we had along the way about the exact direction our project should go. Should we allow for some private chats? What kind of moderation should be applied to the app? How would admin privileges work? A lot of the disputes begged the question about what the true purpose of the app would be. Ultimately, through our discussion, we gained a deeper understanding of what we were looking for, and we moved forward in the project through communication and compromise.
 
-^(*The biggest challenge, however, was arguably the scarcity of medium-sized MLH shirts.)
+<sub>*The biggest challenge, however, was arguably the scarcity of medium-sized MLH shirts.</sub>
 
 ## Authors
 

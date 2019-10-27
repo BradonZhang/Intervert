@@ -55,6 +55,24 @@ class App extends Component {
       roomName,
     } = this.state;
 
+    const makeRoom = () => 
+    {
+      const { currentUser, rooms } = this.state;
+      var text=prompt('Enter room to add');
+          if (text == null || text == '')
+          {
+            return;
+          }
+        return currentUser.createRoom({
+          name: text,
+          private: false,
+          addUserIds: ['Jeff'],
+          customData: {
+            foo:42
+          },
+        });
+      }
+
     const removeUser = () => {
       var text=prompt('Enter user to kick');
       if (text == null || text == '')
@@ -92,11 +110,7 @@ class App extends Component {
         .catch(err => {
           console.log(`Error adding keith to room 123: ${err}`)
         })
-      
-      //  const updated = roomUsers.push(text);
-      //  console.log(updated);
-      //  this.setState({ roomUsers: updated });
-
+        
       const updated=[...this.state.roomUsers];
       updated.push(text);
       this.setState({ roomUsers: updated });
@@ -115,6 +129,7 @@ class App extends Component {
     const updated = rooms.filter(c => c.id !== someRoomID);
     this.setState({ rooms: updated });
   }
+  
 
     return (
       <div className="App">
@@ -169,7 +184,7 @@ class App extends Component {
               onClick={removeUser}
               title={'Kick '+userId+' from '+roomName}
               className="send-dm"
-            >+
+            >x
                 </button>
           </li>
 
@@ -185,12 +200,20 @@ class App extends Component {
           <li className="room-member">Delete room
           <button
           onClick={delRoom}
-          title={'Remove a direct message'}
+          title={'Remove this room'}
           className="send-dm"
         >
           ×
         </button>
         </li>
+        <li className="room-member">Create room
+              <button 
+              onClick={makeRoom}
+              title={'Create room '}
+              className="send-dm"
+                >+
+                </button>
+          </li>
 
         </aside>
         {showLogin ? (

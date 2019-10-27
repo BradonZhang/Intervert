@@ -26,6 +26,7 @@ function handleInput(event) {
 }
 
 function connectToRoom(id = 'ea1cff1b-c89a-4b86-9a77-6f8d48756f4d') {
+  
   const { currentUser } = this.state;
 
   this.setState({
@@ -73,6 +74,7 @@ function connectToRoom(id = 'ea1cff1b-c89a-4b86-9a77-6f8d48756f4d') {
       });
     })
     .catch(console.error);
+
 }
 
 function connectToChatkit(event) {
@@ -155,7 +157,7 @@ function createPrivateRoom(id) {
     addUserIds: [`${id}`],
     customData: {
       isDirectMessage: true,
-      userIds: [currentUser.id, id],
+      userIds: [currentUser.id,id],
     },
   });
   

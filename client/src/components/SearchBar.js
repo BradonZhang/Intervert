@@ -2,8 +2,7 @@ import React, {Component} from 'react'
 
 class Search extends Component
 {
-    filterUpdate()
-    {
+    filterUpdate() {
         const val = this.refs.myValue.value;
         console.log(val)
     }

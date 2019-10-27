@@ -25,7 +25,7 @@ function handleInput(event) {
   });
 }
 
-function connectToRoom(id = 'fc9f9056-e197-4c5c-bb90-e74671ecd84a') {
+function connectToRoom(id = 'ea1cff1b-c89a-4b86-9a77-6f8d48756f4d') {
   const { currentUser } = this.state;
 
   this.setState({
@@ -44,6 +44,7 @@ function connectToRoom(id = 'fc9f9056-e197-4c5c-bb90-e74671ecd84a') {
         },
         onPresenceChanged: () => {
           const { currentRoom } = this.state;
+          if (!currentRoom) return;
           this.setState({
             roomUsers: currentRoom.users.sort(a => {
               if (a.presence.state === 'online') return -1;
@@ -55,17 +56,19 @@ function connectToRoom(id = 'fc9f9056-e197-4c5c-bb90-e74671ecd84a') {
       },
     })
     .then(currentRoom => {
-      const roomName =
-        currentRoom.customData && currentRoom.customData.isDirectMessage
+      const roomName = '';
+      if (currentRoom) {
+        roomName = currentRoom.customData && currentRoom.customData.isDirectMessage
           ? currentRoom.customData.userIds.filter(
               id => id !== currentUser.id
             )[0]
           : currentRoom.name;
+      }
 
       this.setState({
-        currentRoom,
-        roomUsers: currentRoom.users,
-        rooms: currentUser.rooms,
+        currentRoom: currentRoom,
+        roomUsers: currentRoom ? currentRoom.users : [],
+        rooms: currentRoom ? currentUser.rooms : [],
         roomName,
       });
     })

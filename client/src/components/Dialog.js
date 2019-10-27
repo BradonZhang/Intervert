@@ -9,7 +9,7 @@ const Dialog = props => {
       <div className="dialog">
         <form className="dialog-form" onSubmit={connectToChatkit}>
           <label className="username-label" htmlFor="username">
-            Login with your username
+            Log in with your username
           </label>
           <input
             id="username"

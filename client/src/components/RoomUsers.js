@@ -4,6 +4,7 @@ import Proptypes from 'prop-types';
 const RoomUsers = props => {
   const { roomUsers, sendDM, currentUser } = props;
   const users = roomUsers.map(user => {
+    if (!user.presence) return null;
     return (
       <li className="room-member" key={user.id}>
         <div>

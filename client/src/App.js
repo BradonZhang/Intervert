@@ -10,11 +10,13 @@ import Dialog from './components/Dialog';
 import RoomList from './components/RoomList';
 import ChatSession from './components/ChatSession';
 import RoomUsers from './components/RoomUsers';
+import HomePage from './components/HomePage';
 
 import 'skeleton-css/css/normalize.css';
 import 'skeleton-css/css/skeleton.css';
 import './App.css';
 import { link } from 'fs';
+import CreateGroupModal from './components/CreateGroupModal';
 
 class App extends Component {
   constructor() {
@@ -30,6 +32,7 @@ class App extends Component {
       roomName: null,
       messages: [],
       newMessage: '',
+      createGroupModalVisible: false
     };
 
     
@@ -53,25 +56,27 @@ class App extends Component {
       newMessage,
       roomUsers,
       roomName,
+      createGroupModalVisible
     } = this.state;
 
-    const makeRoom = () => 
-    {
+    const isCreator = currentRoom && currentUser && (
+      currentRoom.createdByUserId === currentUser.id
+    );
+
+    const makeRoom = (name, tags) => {
       const { currentUser, rooms } = this.state;
-      var text=prompt('Enter room to add');
-          if (text == null || text == '')
-          {
-            return;
-          }
-        return currentUser.createRoom({
-          name: text,
+        currentUser.createRoom({
+          name,
           private: false,
-          addUserIds: ['Jeff'],
-          customData: {
-            foo:42
-          },
-        });
-      }
+          addUserIds: [currentUser.id],
+          customData: {tags},
+        }).then((room) => {
+          this.connectToRoom(room.id);
+          console.log('Room created', room);
+        })
+          .catch(err => console.warn(err));
+      this.setState({createGroupModalVisible: false});
+    }
 
     const removeUser = () => {
       var text=prompt('Enter user to kick');
@@ -79,6 +84,7 @@ class App extends Component {
       {
         return;
       }
+      // TODO: If user is not in the room, alert the user that the kick failed
       currentUser.removeUserFromRoom({
         userId: text,
         roomId: currentRoom.id
@@ -105,10 +111,10 @@ class App extends Component {
         roomId: currentRoom.id
       })
         .then(() => {
-          console.log('Added ' + text+' to room '+roomName)
+          console.log('Added ' + text+' to room '+roomName);
         })
         .catch(err => {
-          console.log(`Error adding keith to room 123: ${err}`)
+          console.log(`Error adding keith to room 123: ${err}`);
         })
         
       const updated=[...this.state.roomUsers];
@@ -117,13 +123,17 @@ class App extends Component {
     }
 
     const delRoom = () => {
+      if (!isCreator) {
+        alert('You are not the creator of this room.');
+        return;
+      }
       var someRoomID=currentRoom.id;
        currentUser.deleteRoom({ roomId: someRoomID })
     .then(() => {
-      console.log(`Deleted room with ID: ${someRoomID}`)
+      console.log(`Deleted room with ID: ${someRoomID}`);
     })
     .catch(err => {
-      console.log(`Error deleted room ${someRoomID}: ${err}`)
+      console.log(`Error deleted room ${someRoomID}`, err);
     })
 
     const updated = rooms.filter(c => c.id !== someRoomID);
@@ -133,42 +143,59 @@ class App extends Component {
 
     return (
       <div className="App">
+        <CreateGroupModal
+          visible={createGroupModalVisible}
+          onMakeGroup={makeRoom}
+          onCancel={() => this.setState({createGroupModalVisible: false})}
+        />
         <aside className="sidebar left-sidebar">
           {currentUser ? (
-            <div className="user-profile">
-              <span className="username">{currentUser.name}</span>
-              <span className="user-id">{`@${currentUser.id}`}</span>
+            <div
+              className="user-profile"
+              onClick={() => this.setState({currentRoom: null})}
+            >
+              <div className='home-icon'>🏠</div>
+              <div className="profile-info">
+                <span className="username">{currentUser.name}</span>
+                <span className="user-id">{`@${currentUser.id}`}</span>
+              </div>
             </div>
           ) : null}
-          {currentRoom ? (
-            <RoomList
-              rooms={rooms}
-              currentRoom={currentRoom}
-              connectToRoom={this.connectToRoom}
-              currentUser={currentUser}
-            />
-          ) : null}
+          <RoomList
+            rooms={rooms}
+            currentRoom={currentRoom}
+            connectToRoom={this.connectToRoom}
+            currentUser={currentUser}
+          />
         </aside>
-        <section className="chat-screen">
-          <header className="chat-header">
-            {currentRoom ? <h3>{roomName}</h3> : null}
-          </header>
-          <ul className="chat-messages">
-            <ChatSession messages={messages} />
-          </ul>
-          <footer className="chat-footer">
-            <form onSubmit={this.sendMessage} className="message-form">
-              <input
-                type="text"
-                value={newMessage}
-                name="newMessage"
-                className="message-input"
-                placeholder="Type your message and hit ENTER to send"
-                onChange={this.handleInput}
-              />
-            </form>
-          </footer>
-        </section>
+        {currentRoom ? (
+          <section className="chat-screen">
+            <header className="chat-header">
+              {currentRoom ? <h3>{roomName}</h3> : null}
+            </header>
+            <footer className="chat-footer">
+              <form onSubmit={this.sendMessage} className="message-form">
+                <input
+                  type="text"
+                  value={newMessage}
+                  name="newMessage"
+                  className="message-input"
+                  placeholder="Type your message and hit ENTER to send"
+                  onChange={this.handleInput}
+                />
+              </form>
+            </footer>
+            <ul className="chat-messages">
+              <div className='chat-buffer' />
+              <ChatSession messages={messages} />
+            </ul>
+          </section>
+        ) : (
+          <HomePage
+            currentUser={currentUser}
+            connectToRoom={this.connectToRoom}
+          />
+        )}
         <aside className="sidebar right-sidebar">
   
           {currentRoom ? (
@@ -178,8 +205,9 @@ class App extends Component {
               roomUsers={roomUsers}
             />
           ) : null}
-
-          <li className="room-member">Kick user
+        <ul className='admin-options'>
+          {isCreator && (
+            <li className="room-member">Kick user
             <button
               onClick={removeUser}
               title={'Kick '+userId+' from '+roomName}
@@ -187,6 +215,7 @@ class App extends Component {
             >x
                 </button>
           </li>
+          )}
 
           <li className="room-member">Add user
               <button 
@@ -197,23 +226,26 @@ class App extends Component {
                 </button>
           </li>
 
-          <li className="room-member">Delete room
-          <button
-          onClick={delRoom}
-          title={'Remove this room'}
-          className="send-dm"
-        >
-          ×
-        </button>
-        </li>
-        <li className="room-member">Create room
+          {isCreator && (
+            <li className="room-member">Delete room
+              <button
+                onClick={delRoom}
+                title={'Remove this room'}
+                className="send-dm"
+              >
+                ×
+              </button>
+            </li>
+          )}
+          <li className="room-member">Create room
               <button 
-              onClick={makeRoom}
+              onClick={() => this.setState({createGroupModalVisible: true})}
               title={'Create room '}
               className="send-dm"
                 >+
                 </button>
           </li>
+          </ul>
 
         </aside>
         {showLogin ? (

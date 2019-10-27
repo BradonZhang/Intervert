@@ -1,26 +1,32 @@
 import React, {Component} from 'react'
 
-class Search extends Component
+class SearchBar extends Component
 {
-    filterUpdate() {
-        const val = this.refs.myValue.value;
-        console.log(val)
-    }
-    render()
-    {
-        return(
-            <header>
-                <form>
-                    <input
-                        type="text"
-                        ref="myValue"
-                        placeholder="Type to filter..."
-                        onChange={this.filterUpdate.bind(this)}
-                    />
-                </form>
-            </header>
-        )
-    }
+  constructor(props) {
+    super(props);
+  }
+  filterUpdate() {
+    const val = this.refs.clubSearchText.value;
+    this.props.onChange(val);
+  }
+  render() {
+    return (
+      <header>
+        <form
+          className='club-search-container'
+          onSubmit={e => e.preventDefault()}
+        >
+          <input
+            type="text"
+            ref="clubSearchText"
+            placeholder="Search for clubs..."
+            onChange={this.filterUpdate.bind(this)}
+            className='club-search'
+          />
+        </form>
+      </header>
+    );
+  }
 }
 
-export default Search
+export default SearchBar;

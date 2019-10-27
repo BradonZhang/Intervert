@@ -25,13 +25,21 @@ function handleInput(event) {
   });
 }
 
-function connectToRoom(id = 'ea1cff1b-c89a-4b86-9a77-6f8d48756f4d') {
+const defaultRoom = 'ea1cff1b-c89a-4b86-9a77-6f8d48756f4d';
+function connectToRoom(id) {
   
   const { currentUser } = this.state;
 
   this.setState({
     messages: [],
   });
+
+  if (!id) {
+    this.setState({
+      rooms: currentUser.rooms,
+    });
+    return;
+  }
 
   return currentUser
     .subscribeToRoom({
@@ -52,6 +60,17 @@ function connectToRoom(id = 'ea1cff1b-c89a-4b86-9a77-6f8d48756f4d') {
               return 1;
             }),
           });
+        },
+        onUserLeft: removedUser => {
+          const { currentRoom, roomUsers, currentUser } = this.state;
+          console.log(`Attempting to remove ${removedUser.id} from ${currentRoom.name}`)
+          this.setState({
+            roomUsers: roomUsers.filter(user => user.id !== removedUser.id)
+          });
+          if (currentUser.id === removedUser.id) {
+            alert(`You have been kicked from ${currentRoom.name}.`)
+            this.state({currentRoom: null});
+          }
         },
       },
     })

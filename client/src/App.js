@@ -114,7 +114,7 @@ class App extends Component {
 
     const updated = rooms.filter(c => c.id !== someRoomID);
     this.setState({ rooms: updated });
-  }
+    }
 
     return (
       <div className="App">
@@ -169,7 +169,7 @@ class App extends Component {
               onClick={removeUser}
               title={'Kick '+userId+' from '+roomName}
               className="send-dm"
-            >+
+            >x
                 </button>
           </li>
 
@@ -185,7 +185,7 @@ class App extends Component {
           <li className="room-member">Delete room
           <button
           onClick={delRoom}
-          title={'Remove a direct message'}
+          title={'Remove this room'}
           className="send-dm"
         >
           ×

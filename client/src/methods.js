@@ -45,7 +45,6 @@ function connectToRoom(id = 'ea1cff1b-c89a-4b86-9a77-6f8d48756f4d') {
         },
         onPresenceChanged: () => {
           const { currentRoom } = this.state;
-          if (!currentRoom) return;
           this.setState({
             roomUsers: currentRoom.users.sort(a => {
               if (a.presence.state === 'online') return -1;
@@ -57,19 +56,17 @@ function connectToRoom(id = 'ea1cff1b-c89a-4b86-9a77-6f8d48756f4d') {
       },
     })
     .then(currentRoom => {
-      const roomName = '';
-      if (currentRoom) {
-        roomName = currentRoom.customData && currentRoom.customData.isDirectMessage
+      const roomName =
+        currentRoom.customData && currentRoom.customData.isDirectMessage
           ? currentRoom.customData.userIds.filter(
               id => id !== currentUser.id
             )[0]
           : currentRoom.name;
-      }
 
       this.setState({
-        currentRoom: currentRoom,
-        roomUsers: currentRoom ? currentRoom.users : [],
-        rooms: currentRoom ? currentUser.rooms : [],
+        currentRoom,
+        roomUsers: currentRoom.users,
+        rooms: currentUser.rooms,
         roomName,
       });
     })

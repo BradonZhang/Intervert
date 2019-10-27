@@ -17,7 +17,7 @@ const firebaseConfig = {
   messagingSenderId: "961427042717",
   appId: "1:961427042717:web:5b5d7d91db4a9918a4bf74",
   measurementId: "G-YPHLJW2G5F",
-  credential: admin.credential.cert('tokens/firebaseServiceAccount.json')
+  credential: admin.credential.cert('_tokens/firebaseServiceAccount.json')
 };
 
 admin.initializeApp(firebaseConfig);

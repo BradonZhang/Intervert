@@ -166,4 +166,4 @@ function sendDM(id) {
   });
 }
 
-export { sendMessage, handleInput, connectToRoom, connectToChatkit, sendDM, makeRoom };
+export { sendMessage, handleInput, connectToRoom, connectToChatkit, sendDM };

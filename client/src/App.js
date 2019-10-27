@@ -5,7 +5,6 @@ import {
   connectToRoom,
   sendMessage,
   sendDM,
-  makeRoom,
 } from './methods';
 import Dialog from './components/Dialog';
 import RoomList from './components/RoomList';
@@ -40,7 +39,6 @@ class App extends Component {
     this.connectToRoom = connectToRoom.bind(this);
     this.sendMessage = sendMessage.bind(this);
     this.sendDM = sendDM.bind(this);
-    this.makeRoom = makeRoom.bind(this);
   }
 
 

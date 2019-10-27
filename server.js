@@ -4,24 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const Chatkit = require('@pusher/chatkit-server');
-const admin = require('firebase-admin');
 
 const app = express();
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBJmX9yLGMgYEdRKLAGfILlWlANaBGg3Lc",
-  authDomain: "intervert-24030.firebaseapp.com",
-  databaseURL: "https://intervert-24030.firebaseio.com",
-  projectId: "intervert-24030",
-  storageBucket: "intervert-24030.appspot.com",
-  messagingSenderId: "961427042717",
-  appId: "1:961427042717:web:5b5d7d91db4a9918a4bf74",
-  measurementId: "G-YPHLJW2G5F",
-  credential: admin.credential.cert('_tokens/firebaseServiceAccount.json')
-};
-
-admin.initializeApp(firebaseConfig);
-const db = admin.firestore();
 
 const chatkit = new Chatkit.default({
   instanceLocator: process.env.CHATKIT_INSTANCE_LOCATOR,

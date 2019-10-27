@@ -1,26 +1,18 @@
-# Chatkit Direct Messages
+# Intervert
 
-Send one-on-one direct messages with Chatkit. Tutorial: https://pusher.com/tutorials/react-direct-messaging
-
-## Getting Started
-
-1. Clone this repository and `cd` into it.
-2. Execute `npm install` to download dependencies.
-3. See tutorial for notes on how to get the required credentials from Chatkit
-4. Open `client/src/methods.js`, and `.env` and update them with your Chatkit credentials
-5. Run `node server.js` to start the Express server
-6. `cd` into the `client` folder, run `npm install` followed by `npm start` to start the development server. View http://localhost:3000 in your browser.
-
-## Pre-requisites
-
-- [Node.js](https://nodejs.org/en) and npm
+A chat app for students to find study groups, common interest groups, and new friends. All chats are public and can be searched for easily, and new chats pop up at the top of the home page. Be involved, meet new people, and get to know your community!
 
 ## Built With
 
+- [Node.js](https://nodejs.org/en) and npm
 - [React](https://reactjs.org) - For creating the application frontend
-- [Chatkit](https://pusher.com/chatkit) - Chat features
+- [Chatkit](https://pusher.com/chatkit) - Chat features using Express JS
 
-## Licence
+## Authors
 
-[MIT](https://opensource.org/licenses/MIT)
+- Jeffrey Liang
+- Rohan Samanta
+- Raymond Yu
+- Bradon Zhang
 
+♥ HackGT 2019

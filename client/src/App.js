@@ -212,7 +212,7 @@ class App extends Component {
               onClick={removeUser}
               title={'Kick '+userId+' from '+roomName}
               className="send-dm"
-            >x
+            >🦶
                 </button>
           </li>
           )}
@@ -222,7 +222,7 @@ class App extends Component {
               onClick={addUser}
               title={'Add '+userId+' to '+roomName}
               className="send-dm"
-                >+
+                >➕
                 </button>
           </li>
 
@@ -233,7 +233,7 @@ class App extends Component {
                 title={'Remove this room'}
                 className="send-dm"
               >
-                ×
+                🗑️
               </button>
             </li>
           )}
@@ -242,7 +242,7 @@ class App extends Component {
               onClick={() => this.setState({createGroupModalVisible: true})}
               title={'Create room '}
               className="send-dm"
-                >+
+                >➕
                 </button>
           </li>
           </ul>

@@ -17,7 +17,7 @@ const RoomUsers = props => {
             title={`Send ${user.name} a direct message`}
             className="send-dm"
           >
-            +
+            📭
           </button>
         ) : null}
       </li>

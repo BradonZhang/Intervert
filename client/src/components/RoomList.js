@@ -4,7 +4,7 @@ import Proptypes from 'prop-types';
 const RoomList = props => {
   const { rooms, currentRoom, connectToRoom, currentUser } = props;
   const roomList = rooms.map(room => {
-    const roomIcon = !room.isPrivate ? '🌐' : '🔒';
+    const roomIcon = !room.isPrivate ? '🌍' : '🤫';
     const isRoomActive = (currentRoom && room.id === currentRoom.id) ? 'active' : '';
 
 

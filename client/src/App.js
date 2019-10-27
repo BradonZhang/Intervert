@@ -116,6 +116,12 @@ class App extends Component {
     this.setState({ rooms: updated });
   }
 
+  
+
+  // const updated = rooms.filter(c => c.id !== someRoomID);
+  // this.setState({ rooms: updated });
+
+
     return (
       <div className="App">
         <aside className="sidebar left-sidebar">
@@ -191,6 +197,15 @@ class App extends Component {
           ×
         </button>
         </li>
+
+        <li className="room-member">Create room
+              <button 
+              onClick={makeRoom}
+              title={'Create room '}
+              className="send-dm"
+                >+
+                </button>
+          </li>
 
         </aside>
         {showLogin ? (

@@ -169,7 +169,7 @@ function makeRoom (){
       }
     return currentUser.createRoom({
       name: text,
-      private: false,
+      private: true,
       addUserIds: ['jeff'],
       customData: {
         foo:42

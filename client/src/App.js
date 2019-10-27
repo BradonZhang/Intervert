@@ -5,6 +5,7 @@ import {
   connectToRoom,
   sendMessage,
   sendDM,
+  makeRoom,
 } from './methods';
 import Dialog from './components/Dialog';
 import RoomList from './components/RoomList';
@@ -39,6 +40,7 @@ class App extends Component {
     this.connectToRoom = connectToRoom.bind(this);
     this.sendMessage = sendMessage.bind(this);
     this.sendDM = sendDM.bind(this);
+    this.makeRoom = makeRoom.bind(this);
   }
 
 
@@ -54,6 +56,24 @@ class App extends Component {
       roomUsers,
       roomName,
     } = this.state;
+
+    const makeRoom = () => 
+    {
+      const { currentUser, rooms } = this.state;
+      var text=prompt('Enter room to add');
+          if (text == null || text == '')
+          {
+            return;
+          }
+        return currentUser.createRoom({
+          name: text,
+          private: false,
+          addUserIds: ['Jeff'],
+          customData: {
+            foo:42
+          },
+        });
+      }
 
     const removeUser = () => {
       var text=prompt('Enter user to kick');
@@ -97,9 +117,9 @@ class App extends Component {
       //  console.log(updated);
       //  this.setState({ roomUsers: updated });
 
-      const updated=[...this.state.roomUsers];
-      updated.push(text);
-      this.setState({ roomUsers: updated });
+      // const updated=[...this.state.roomUsers];
+      // updated.push(text);
+      // this.setState({ roomUsers: updated });
     }
 
     const delRoom = () => {
@@ -115,12 +135,7 @@ class App extends Component {
     const updated = rooms.filter(c => c.id !== someRoomID);
     this.setState({ rooms: updated });
   }
-
   
-
-  // const updated = rooms.filter(c => c.id !== someRoomID);
-  // this.setState({ rooms: updated });
-
 
     return (
       <div className="App">
@@ -197,7 +212,6 @@ class App extends Component {
           ×
         </button>
         </li>
-
         <li className="room-member">Create room
               <button 
               onClick={makeRoom}

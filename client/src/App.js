@@ -92,11 +92,7 @@ class App extends Component {
         .catch(err => {
           console.log(`Error adding keith to room 123: ${err}`)
         })
-      
-      //  const updated = roomUsers.push(text);
-      //  console.log(updated);
-      //  this.setState({ roomUsers: updated });
-
+        
       const updated=[...this.state.roomUsers];
       updated.push(text);
       this.setState({ roomUsers: updated });
@@ -191,6 +187,15 @@ class App extends Component {
           ×
         </button>
         </li>
+
+        <li className="room-member">Create room
+              <button 
+              onClick={makeRoom}
+              title={'Create room '}
+              className="send-dm"
+                >+
+                </button>
+          </li>
 
         </aside>
         {showLogin ? (

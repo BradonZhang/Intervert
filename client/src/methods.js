@@ -26,6 +26,7 @@ function handleInput(event) {
 }
 
 function connectToRoom(id = 'ea1cff1b-c89a-4b86-9a77-6f8d48756f4d') {
+  
   const { currentUser } = this.state;
 
   this.setState({
@@ -70,6 +71,7 @@ function connectToRoom(id = 'ea1cff1b-c89a-4b86-9a77-6f8d48756f4d') {
       });
     })
     .catch(console.error);
+
 }
 
 function connectToChatkit(event) {
@@ -152,11 +154,28 @@ function createPrivateRoom(id) {
     addUserIds: [`${id}`],
     customData: {
       isDirectMessage: true,
-      userIds: [currentUser.id, id],
+      userIds: [currentUser.id,id],
     },
   });
   
 }
+
+function makeRoom (){
+  const { currentUser, rooms } = this.state;  
+  var text=prompt('Enter room to add');
+      if (text == null || text == '')
+      {
+        return;
+      }
+    return currentUser.createRoom({
+      name: text,
+      private: false,
+      addUserIds: ['jeff'],
+      customData: {
+        foo:42
+      },
+    });
+  }
 
 function sendDM(id) {
   createPrivateRoom.call(this, id).then(room => {
@@ -164,4 +183,4 @@ function sendDM(id) {
   });
 }
 
-export { sendMessage, handleInput, connectToRoom, connectToChatkit, sendDM };
+export { sendMessage, handleInput, connectToRoom, connectToChatkit, sendDM, makeRoom };

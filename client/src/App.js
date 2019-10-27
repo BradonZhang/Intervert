@@ -112,14 +112,10 @@ class App extends Component {
         .catch(err => {
           console.log(`Error adding keith to room 123: ${err}`)
         })
-      
-      //  const updated = roomUsers.push(text);
-      //  console.log(updated);
-      //  this.setState({ roomUsers: updated });
-
-      // const updated=[...this.state.roomUsers];
-      // updated.push(text);
-      // this.setState({ roomUsers: updated });
+        
+      const updated=[...this.state.roomUsers];
+      updated.push(text);
+      this.setState({ roomUsers: updated });
     }
 
     const delRoom = () => {
@@ -190,7 +186,7 @@ class App extends Component {
               onClick={removeUser}
               title={'Kick '+userId+' from '+roomName}
               className="send-dm"
-            >+
+            >x
                 </button>
           </li>
 
@@ -206,7 +202,7 @@ class App extends Component {
           <li className="room-member">Delete room
           <button
           onClick={delRoom}
-          title={'Remove a direct message'}
+          title={'Remove this room'}
           className="send-dm"
         >
           ×

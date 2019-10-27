@@ -160,23 +160,6 @@ function createPrivateRoom(id) {
   
 }
 
-function makeRoom (){
-  const { currentUser, rooms } = this.state;  
-  var text=prompt('Enter room to add');
-      if (text == null || text == '')
-      {
-        return;
-      }
-    return currentUser.createRoom({
-      name: text,
-      private: true,
-      addUserIds: ['jeff'],
-      customData: {
-        foo:42
-      },
-    });
-  }
-
 function sendDM(id) {
   createPrivateRoom.call(this, id).then(room => {
     connectToRoom.call(this, room.id);

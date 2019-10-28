@@ -15,7 +15,7 @@ const HomePage = (props) => {
 
   const [searchVal, setSearchVal] = useState('');
   const [joinableRooms, setJoinableRooms] = useState([]);
-  const [sortMethod, setSortMethod] = useState('new');
+  const [sortMethod, setSortMethod] = useState('new'); //TODO: potential sort by popularity
 
   useEffect(() => {
     if (!currentUser) return;
@@ -28,7 +28,7 @@ const HomePage = (props) => {
           ) : '';
           return (
             room.name.toLowerCase().includes(searchVal.toLowerCase()) ||
-            searchTokens.reduce((res, tag) => res && tagString.includes(tag), true)
+            searchTokens.reduce((res, tag) => res && tagString.includes(tag.toLowerCase()), true)
           );
         }
       );
